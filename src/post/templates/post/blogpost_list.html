@@ -1,17 +1,33 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title> accueil du blog </title>
+<title> accueil du blog </title>
 {% endblock%}
 
 {% block content %}
-  <h1> le blog de pymalien </h1>
-  {% for pos in post %}
-    <article>
-      <h2> {{ pos.title }}</h2>
-      <h5> publié par <i>{{ pos.author_or_default }}</i> le {{ pos.created_on|date:'j F Y' }} </h5>
-      <p> {{ pos.content|safe|truncatewords:100}}</p>
-    </article>
-  {% endfor %}
+<h1> le blog de pymalien </h1>
+{% for pos in post %}
+<article>
+    <div class="post-title">
+        <h2> {{ pos.title }}</h2>
+
+        {% if request.user.is_authenticated %}
+        <div>
+            <a href="{% url 'post:edit' slug=pos.slug %}"> éditer</a>
+            <a href="{% url 'post:delete' slug=pos.slug %}"> supprimer</a>
+        </div>
+        {% endif %}
+    </div>
+    <h5 class="post-author"> publié par <i>{{ pos.author_or_default }}</i> le {{ pos.created_on|date:'j F Y' }}</h5>
+    <p class="post-excerpt"> {{ pos.content|safe|truncatewords:20}}</p>
+    </div>
+
+    <form action="{% url 'post:detail' slug=pos.slug %}">
+        <button class="btn btn-submit"> lire l'article</button>
+    </form>
+
+
+</article>
+{% endfor %}
 {% endblock %}
 

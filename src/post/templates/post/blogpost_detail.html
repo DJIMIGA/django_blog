@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <article>
+  <article class="post-detail">
     <h1> {{post.title}} </h1>
-    <br>
+    <img src="{{post.thumbnail.url }}" alt="image de l'article">
     <div> {{ post.content|linebreaks|safe}}</div>
   </article>
 {% endblock %}

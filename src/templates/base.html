@@ -1,15 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
      {% block title %}
-        <title>accueil du blog </title>
+    <title>accueil du blog </title>
      {% endblock %}
-
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+<nav>
+    <a href="{% url 'post:home'%}"> accueil </a>
 
-<section id="blog ">
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'post:create' %}"> ajouter un article </a>
+    {% endif %}
+</nav>
+<section id="blog">
     {% block content %}
 
     {% endblock %}
